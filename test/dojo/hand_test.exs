@@ -64,7 +64,6 @@ defmodule Dojo.HandTest do
     assert Hand.score(cards) == :high_card
   end
 
-  # @tag :skip
   test "evaluates royal flush of diamonds" do
     cards = [
       %Card{rank: 10, suit: :diamonds},
@@ -75,6 +74,18 @@ defmodule Dojo.HandTest do
     ]
 
     assert Hand.score(cards) == :royal_flush
+  end
+
+  test "does not evaluate royal flush for mismatching suits" do
+    cards = [
+      %Card{rank: 10, suit: :diamonds},
+      %Card{rank: 11, suit: :diamonds},
+      %Card{rank: 12, suit: :diamonds},
+      %Card{rank: 13, suit: :clubs},
+      %Card{rank: 14, suit: :clubs}
+    ]
+
+    assert Hand.score(cards) != :royal_flush
   end
 
 end

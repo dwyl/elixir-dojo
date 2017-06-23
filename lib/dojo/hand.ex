@@ -8,8 +8,6 @@ defmodule Dojo.Hand do
   defp evaluate(cards) do
     suits = Enum.map(cards, fn card -> card.suit end)
     ranks = Enum.map(cards, fn card -> card.rank end)
-    # IO.inspect(ranks)
-    # IO.puts Enum.at(ranks, 1)
 
     cond do
       # royal flush:
