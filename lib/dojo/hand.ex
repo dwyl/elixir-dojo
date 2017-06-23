@@ -13,6 +13,10 @@ defmodule Dojo.Hand do
         :straight_flush
       is_flush?(cards) ->
         :flush
+      is_straight?(cards) ->
+        :straight
+      is_pair?(cards) ->
+        :pair
       true ->
         :high_card
     end
@@ -26,14 +30,16 @@ defmodule Dojo.Hand do
     |> Map.get(:rank)
   end
 
-  defp is_straight_flush?(cards) do
+  defp is_straight?(cards) do
     min = min_rank(cards)
     list = Enum.to_list min..(min + 4)
     result = cards
     |> Enum.map(&(&1.rank in list))
     |> Enum.reduce(true, fn(x, acc) -> x && acc end)
+  end
 
-    result && is_flush?(cards)
+  defp is_straight_flush?(cards) do
+    is_straight?(cards) && is_flush?(cards)
   end
 
   defp is_royal_flush?(cards) do
@@ -49,15 +55,18 @@ defmodule Dojo.Hand do
     |> Enum.map(&(&1.suit == kind))
     |> Enum.reduce(true, fn(x, acc) -> x && acc end)
   end
+
+  defp cardinality(cards) do
+    ranks = cards
+    |> Enum.map(&(&1.rank))
+
+    numbers = ranks
+    |> Enum.group_by(fn(x) -> x end)
+    |> Enum.map(fn({_, val}) -> length val end)
+  end
+
+  defp is_pair?(cards) do
+    numbers = cardinality(cards)
+    2 in numbers
+  end
 end
-
-
-# cards = [
-#   %Card{rank: 10, suit: :hearts},
-#   %Card{rank: 11, suit: :hearts},
-#   %Card{rank: 12, suit: :hearts},
-#   %Card{rank: 13, suit: :hearts},
-#   %Card{rank: 14, suit: :hearts}
-# ]
-#
-# assert Hand.score(cards) == :straight_flush

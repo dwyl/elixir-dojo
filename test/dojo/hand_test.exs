@@ -63,4 +63,29 @@ defmodule Dojo.HandTest do
 
     assert Hand.score(cards) == :high_card
   end
+
+  test "evaluates straight cards" do
+    cards = [
+      %Card{rank: 2, suit: :spades},
+      %Card{rank: 3, suit: :hearts},
+      %Card{rank: 4, suit: :diamonds},
+      %Card{rank: 5, suit: :spades},
+      %Card{rank: 6, suit: :spades}
+    ]
+
+    assert Hand.score(cards) == :straight
+  end
+
+
+    test "evaluates pair cards" do
+      cards = [
+        %Card{rank: 2, suit: :spades},
+        %Card{rank: 2, suit: :hearts},
+        %Card{rank: 1, suit: :diamonds},
+        %Card{rank: 5, suit: :spades},
+        %Card{rank: 6, suit: :spades}
+      ]
+
+      assert Hand.score(cards) == :pair
+    end
 end
