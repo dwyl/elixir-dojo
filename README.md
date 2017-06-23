@@ -3,7 +3,8 @@
 ## What
 
 We're going to be solving a card problem in Elixir.
-You will need to have Elixir installed, or pair with someone who does.
+You will need to have [Elixir installed](https://github.com/dwyl/learn-elixir#how),
+or pair with someone who does.
 
 **Given five playing cards, evaluate the hand.**
 
