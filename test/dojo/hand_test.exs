@@ -13,7 +13,7 @@ defmodule Dojo.HandTest do
       %Card{rank: 14, suit: :hearts}
     ]
 
-    assert Hand.score(cards) == :straight_flush
+    assert Hand.score(cards) == :royal_flush
   end
 
   test "evaluates flush of hearts" do

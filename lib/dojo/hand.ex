@@ -7,6 +7,8 @@ defmodule Dojo.Hand do
 
   defp evaluate(cards) do
     cond do
+      is_royal_flush?(cards) ->
+        :royal_flush
       is_straight_flush?(cards) ->
         :straight_flush
       is_flush?(cards) ->
@@ -17,18 +19,25 @@ defmodule Dojo.Hand do
 
   end
 
-  defp is_straight_flush?(cards) do
-    min = cards
+  defp min_rank(cards) do
+    cards
     |> Enum.sort(&(&1.rank <= &2.rank))
     |> List.first()
     |> Map.get(:rank)
+  end
 
+  defp is_straight_flush?(cards) do
+    min = min_rank(cards)
     list = Enum.to_list min..(min + 4)
     result = cards
     |> Enum.map(&(&1.rank in list))
     |> Enum.reduce(true, fn(x, acc) -> x && acc end)
 
-    result
+    result && is_flush?(cards)
+  end
+
+  defp is_royal_flush?(cards) do
+    is_straight_flush?(cards) && (min_rank(cards) == 10)
   end
 
   defp is_flush?(cards) do
