@@ -19,13 +19,12 @@ defmodule Dojo.Hand do
     end
   end
 
-  defp is_straight(cards) do
-    # sort cards by rank
-    # Map (reduce) through checking rank of n == rank of (n -1) +1 
-  end
+  # defp sort_by_rank(cards) do
+  #   Enum.sort(cards, fn(%{_: _, suit: suit}) -> ... end)
+  # end
 
-  defp is_same_suit(cards) do
-    Enum.all?(tail, fn(%{rank: _, suit: suit}) -> suit == initialSuit end)
+  defp is_same_suit([ %{suit: initialSuit} | tail]) do
+    Enum.all?(tail, fn(%{suit: suit}) -> suit == initialSuit end)
   end
 
 end
